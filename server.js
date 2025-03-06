@@ -47,7 +47,7 @@ if (config.listenIp) {
     listenIp = '0.0.0.0';
 } else {
     // Otherwise we listen on the loopback address only
-    listenIp = '127.0.0.1';
+    listenIp = '0.0.0.0';
 }
 if (!whitelistMode && ipaddr.parse(listenIp).range() !== 'loopback') {
     console.warn(
@@ -68,7 +68,7 @@ const csrf_token = config.csrf_token;
 global.BETA_KEY;
 var Client = require('node-rest-client').Client;
 var client = new Client();
-var api_server = "http://127.0.0.1:5000/api";//"http://127.0.0.1:5000";
+var api_server = "http://0.0.0.0:5000/api";//"http://127.0.0.1:5000";
 const api_novelai = "https://api.novelai.net";
 const api_openai = "https://api.openai.com/v1";
 const api_horde = "https://stablehorde.net/api";
@@ -616,7 +616,7 @@ app.post("/getstatus", jsonParser, function(request, response_getstatus = respon
     if(!request.body) return response_getstatus.sendStatus(400);
     api_server = request.body.api_server;
     if(api_server.indexOf('localhost') != -1){
-        api_server = api_server.replace('localhost','127.0.0.1');
+        api_server = api_server.replace('localhost','0.0.0.0');
     }
     var args = {
         headers: { "Content-Type": "application/json" }
@@ -647,7 +647,7 @@ app.post("/getstatus_webui", jsonParser, function(request, response_getstatus){
     if(!request.body) return response_getstatus.sendStatus(400);
     api_server = request.body.api_server_webui;
     if(api_server.indexOf('localhost') != -1){
-        api_server = api_server.replace('localhost','127.0.0.1');
+        api_server = api_server.replace('localhost','0.0.0.0');
     }
     var args = {
         headers: { "Content-Type": "application/json" }
@@ -675,7 +675,7 @@ app.post("/getstatus_webui", jsonParser, function(request, response_getstatus){
 });
 function checkServer(){
     //console.log('Check run###################################################');
-    api_server = 'http://127.0.0.1:5000/api';
+    api_server = 'http://0.0.0.0:5000/api';
     var args = {
         headers: { "Content-Type": "application/json" }
     };
@@ -1893,7 +1893,7 @@ app.post("/getstatus_openai", jsonParser, function(request, response_getstatus_o
     api_key_openai = request.body.key;
     api_url_openai = request.body.url;
     if(api_url_openai.indexOf('localhost') != -1){
-        api_url_openai = api_url_openai.replace('localhost','127.0.0.1');
+        api_url_openai = api_url_openai.replace('localhost','0.0.0.0');
     }
     var args = {};
     if(api_key_openai && api_key_openai.length) {
@@ -2599,11 +2599,11 @@ app.listen(server_port, listenIp, function() {
     initCardeditor();
     const autorunUrl = new URL(
             ('http://') +
-            ('127.0.0.1') +
+            ('0.0.0.0') +
             (':' + server_port)
             );
     if(autorun) open(autorunUrl.toString());
-    console.log('TavernAI has started and is available on IP: 127.0.0.1 at PORT: '+server_port);
+    console.log('TavernAI has started and is available on IP: 0.0.0.0 at PORT: '+server_port);
     console.log('TavernAI is bound to interface: ' + listenIp);
     console.log('TavernAI url: ' + listenIp+ ':'+server_port);
 });
